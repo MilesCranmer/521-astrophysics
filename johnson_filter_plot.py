@@ -24,8 +24,20 @@ assert len(filter_names) == flux_density.size == central_wavelength.size
 
 nm_wavelengths = central_wavelength.to('nm').value
 magnitudes = np.zeros(len(nm_wavelengths))
-#x_positions = range(len(nm_wavelengths))
+y_positions = range(len(nm_wavelengths))
 
+plt.scatter(nm_wavelengths, y_positions, color='black', marker='o')
+plt.xlabel(r"$\lambda_c=$ Central effective wavelength $ {\rm(nm)}$")
+plt.xscale('log')
+plt.xlim(min(nm_wavelengths)/1.5, max(nm_wavelengths)*1.5)
+plt.yticks(y_positions, [r"$\rm"+name+" $" for name in filter_names])
+plt.savefig('johnson_filter_plot.svg')
+
+### Since I am unsure if the question is asking for two plots in the same
+### file, or actually in the same axes (as I do below), here is code for
+### two different axes:
+
+"""
 fig = plt.figure()
 ax1 = fig.add_subplot(111)
 ax2 = ax1.twiny()
@@ -55,8 +67,4 @@ for y_pos in Y:
 	ax1.axhline(y_pos, linestyle = 'dotted', lw=0.5, color='black')
 
 plt.savefig('johnson_filter_plot.png')
-
-
-###(Since I am unsure if the question is asking for two plots in the same
-### file, or actually in the same axes (as I did above), here is code for
-### two different plots in the same image:)
+"""
