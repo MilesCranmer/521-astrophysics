@@ -23,19 +23,32 @@ central_wavelength = np.array(
 assert len(filter_names) == flux_density.size == central_wavelength.size
 
 nm_wavelengths = central_wavelength.to('nm').value
+Y = flux_density.value
 magnitudes = np.zeros(len(nm_wavelengths))
 y_positions = range(len(nm_wavelengths))
 
+plt.figure(1)
+plt.subplot(211)
 plt.scatter(nm_wavelengths, y_positions, color='black', marker='o')
 plt.xlabel(r"$\lambda_c=$ Central effective wavelength $ {\rm(nm)}$")
 plt.xscale('log')
 plt.xlim(min(nm_wavelengths)/1.5, max(nm_wavelengths)*1.5)
 plt.yticks(y_positions, [r"$\rm"+name+" $" for name in filter_names])
-plt.savefig('johnson_filter_plot.svg')
+plt.ylabel("Johnson filter")
 
+plt.subplot(212)
+plt.scatter(nm_wavelengths, Y, color='black', marker='o')
+plt.xlabel(r"$\lambda_c=$ Central effective wavelength $ {\rm(nm)}$")
+plt.xscale('log')
+plt.xlim(min(nm_wavelengths)/1.5, max(nm_wavelengths)*1.5)
+plt.ylabel(r"$F_\lambda=$ Flux density  $(\mathrm{ W m^{-2} \mu m^{-1}})$ ")
+plt.yscale('log')
+plt.ylim(min(Y)/1.5, max(Y)*1.5)
+plt.tight_layout()
+plt.savefig('filter_vs_wavelength.svg')
 ### Since I am unsure if the question is asking for two plots in the same
 ### file, or actually in the same axes (as I do below), here is code for
-### two different axes:
+### the same plot:
 
 """
 fig = plt.figure()
